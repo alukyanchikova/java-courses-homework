@@ -11,12 +11,12 @@ public class HelperBase {
         this.wd = wd;
     }
 
-    protected void click(By locator) {
+    protected void clickOnForm(By locator) {
         wd.findElement(locator).click();
     }
 
-    protected void type(By locator, String text) {
-        click(locator);
+    protected void fillFormWithText(By locator, String text) {
+        clickOnForm(locator);
         wd.findElement(locator).clear();
         wd.findElement(locator).sendKeys(text);
     }
