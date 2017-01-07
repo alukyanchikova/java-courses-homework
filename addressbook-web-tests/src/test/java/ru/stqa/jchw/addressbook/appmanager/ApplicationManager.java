@@ -24,4 +24,12 @@ public class ApplicationManager {
     public void stop() {
         wd.quit();
     }
+
+    public NavigationHelper getNavigationHelper() {
+        return navigationHelper;
+    }
+
+    public GroupHelper getGroupHelper() {
+        return groupHelper;
+    }
 }
