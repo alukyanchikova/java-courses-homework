@@ -1,4 +1,4 @@
-package ru.stqa.jchw.addressbook;
+package ru.stqa.jchw.addressbook.tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.stqa.jchw.addressbook.model.ContactData;
 
 import java.util.concurrent.TimeUnit;
 
@@ -33,7 +34,7 @@ public class ContactCreationTest {
     }
     
     @Test
-    public void ContactCreationTest() {
+    public void testContactCreation() {
         addNewContact();
         ContactData contact = new ContactData("Ivanov", "Ivanov",
                 "144A Mira str., Apt. 1, Moscow 123456, Russia.", "8 (999) 11-11-111", "111@111.com");

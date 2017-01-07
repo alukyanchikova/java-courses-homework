@@ -1,4 +1,4 @@
-package ru.stqa.jchw.addressbook;
+package ru.stqa.jchw.addressbook.model;
 
 public class GroupData {
     private final String name;
@@ -12,7 +12,6 @@ public class GroupData {
     }
 
     public String getName() {
-        //
         return name;
     }
 
