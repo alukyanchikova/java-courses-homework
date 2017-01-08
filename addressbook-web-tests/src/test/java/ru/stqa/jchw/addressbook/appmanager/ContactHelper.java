@@ -11,13 +11,13 @@ public class ContactHelper extends HelperBase {
     }
 
     public void saveNewContact() {
-        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+        clickOnForm(By.name("submit"));
     }
 
     public void fillContactForm(ContactData contactData) {
         fillFormWithText(By.name("firstname"), contactData.getFirstname());
         fillFormWithText(By.name("lastname"), contactData.getLastname());
-        fillFormWithText(By.name("address"), contactData.getLastname());
+        fillFormWithText(By.name("address"), contactData.getAddress());
         fillFormWithText(By.name("mobile"), contactData.getMobilePhone());
         fillFormWithText(By.name("email"), contactData.getEmail());
     }
@@ -35,7 +35,15 @@ public class ContactHelper extends HelperBase {
     }
 
     public void clickOnDelete() {
-        wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
+        clickOnForm(By.xpath("//input[@value='Delete']"));
+    }
+
+    public void initContactModification() {
+        clickOnForm(By.xpath("//img[@title='Edit'][1]"));
+    }
+
+    public void submitContactModification() {
+        clickOnForm(By.name("update"));
     }
 }
 
