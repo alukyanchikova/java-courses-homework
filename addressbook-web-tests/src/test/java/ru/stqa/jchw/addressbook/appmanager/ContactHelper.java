@@ -55,10 +55,14 @@ public class ContactHelper extends HelperBase {
     }
 
     public void createContact(ContactData contact, boolean creation) {
+        returnToHomePage();
+        int numberOfElementsBefore = getContactCount();
         addNewContact();
         fillContactForm(contact, creation);
         saveNewContact();
         returnToHomePage();
+        int numberOfElementsAfter = getContactCount();
+        Assert.assertEquals(numberOfElementsAfter, numberOfElementsBefore + 1);
     }
     public void returnToHomePage() {
         clickOnForm(By.linkText("home"));
@@ -66,6 +70,10 @@ public class ContactHelper extends HelperBase {
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getContactCount() {
+        return wd.findElements(By.name("selected[]")).size();
     }
 }
 
