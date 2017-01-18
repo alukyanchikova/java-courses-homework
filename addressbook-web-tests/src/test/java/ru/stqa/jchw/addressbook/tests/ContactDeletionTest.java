@@ -15,7 +15,7 @@ public class ContactDeletionTest extends TestBase {
                     "144A Mira str., Apt. 1, Moscow 123456, Russia.", "8 (999) 11-11-111",
                     "111@111.com", "test"), true);
         }
-        app.getContactHelper().selectContact();
+        app.getContactHelper().selectContact(numberOfElementsBefore - 1);
         app.getContactHelper().clickOnDelete();
         app.getContactHelper().acceptDeletion();
         app.getNavigationHelper().gotoHomePage();

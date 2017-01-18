@@ -15,7 +15,7 @@ public class ContactModificationTest extends TestBase {
                     "144A Mira str., Apt. 1, Moscow 123456, Russia.", "8 (999) 11-11-111",
                     "111@111.com", "test"), true);
         }
-        app.getContactHelper().initContactModification();
+        app.getContactHelper().initContactModification(numberOfElementsBefore - 1);
         app.getContactHelper().fillContactForm(new ContactData("Ivanova", "Ivanka",
                 "144A Mira str., Apt. 1, Moscow 123456, Russia.", "8 (999) 11-11-111",
                 "111@111.com", null), false);
