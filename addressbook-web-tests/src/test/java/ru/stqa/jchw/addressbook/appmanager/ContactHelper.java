@@ -58,11 +58,11 @@ public class ContactHelper extends HelperBase {
         clickOnForm(By.name("update"));
     }
 
-    public void createContact(ContactData contact, boolean creation) {
+    public void createContact(ContactData contact) {
         returnToHomePage();
         List<ContactData> before = getContactList();
         addNewContact();
-        fillContactForm(contact, creation);
+        fillContactForm(contact, true);
         saveNewContact();
         returnToHomePage();
         List<ContactData> after = getContactList();
