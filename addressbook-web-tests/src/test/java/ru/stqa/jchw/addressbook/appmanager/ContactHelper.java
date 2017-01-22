@@ -70,12 +70,15 @@ public class ContactHelper extends HelperBase {
     }
 
     public List<ContactData> getContactList() {
-        List<ContactData> contacts = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
-        //List<WebElement> elements = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::input[@type='checkbox']"));
-        for (WebElement element : elements) {
-            String name = element.getText();
-            ContactData contact = new ContactData(name, null, null, null, null, null);
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> rows = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
+        for (WebElement row : rows) {
+            List<WebElement> columns =row.findElements(By.xpath(".//td"));
+            WebElement firstNameColumn = columns.get(1);
+            String firstName = firstNameColumn.getText();
+            WebElement lastNameColumn = columns.get(2);
+            String lastName = lastNameColumn.getText();
+            ContactData contact = new ContactData(firstName, lastName, null, null, null, null);
             contacts.add(contact);
         }
         return contacts;
