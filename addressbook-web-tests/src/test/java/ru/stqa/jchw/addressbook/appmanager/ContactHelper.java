@@ -60,13 +60,10 @@ public class ContactHelper extends HelperBase {
 
     public void createContact(ContactData contact) {
         returnToHomePage();
-        List<ContactData> before = getContactList();
         addNewContact();
         fillContactForm(contact, true);
         saveNewContact();
         returnToHomePage();
-        List<ContactData> after = getContactList();
-        Assert.assertEquals(after.size(), before.size() + 1);
     }
 
     public List<ContactData> getContactList() {
@@ -74,9 +71,9 @@ public class ContactHelper extends HelperBase {
         List<WebElement> rows = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
         for (WebElement row : rows) {
             List<WebElement> columns =row.findElements(By.xpath(".//td"));
-            WebElement firstNameColumn = columns.get(1);
+            WebElement firstNameColumn = columns.get(2);
             String firstName = firstNameColumn.getText();
-            WebElement lastNameColumn = columns.get(2);
+            WebElement lastNameColumn = columns.get(1);
             String lastName = lastNameColumn.getText();
             ContactData contact = new ContactData(firstName, lastName, null, null, null, null);
             contacts.add(contact);

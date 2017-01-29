@@ -13,7 +13,7 @@ public class GroupData {
         this.footer = footer;
     }
 
-    public GroupData(int id,String name, String header, String footer) {
+    public GroupData(int id, String name, String header, String footer) {
         this.id = id;
         this.name = name;
         this.header = header;
