@@ -73,6 +73,13 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
+    public void deleteContact(int indexContactDeletion) {
+        selectContact(indexContactDeletion);
+        clickOnDelete();
+        acceptDeletion();
+        returnToHomePage();
+    }
+
     public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> rows = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
