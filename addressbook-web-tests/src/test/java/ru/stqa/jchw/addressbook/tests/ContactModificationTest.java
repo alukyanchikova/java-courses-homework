@@ -12,23 +12,20 @@ public class ContactModificationTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.getNavigationHelper().gotoHomePage();
-        if (app.getContactHelper().getContactList().size() == 0) {
-            app.getContactHelper().createContact(new ContactData("Ivan", "Ivanov",
-                    "144A Mira str., Apt. 1, Moscow 123456, Russia.", "8 (999) 11-11-111",
-                    "111@111.com", "test"));
+        app.goTo().homePage();
+        if (app.contact().list().size() == 0) {
+            app.contact().createContact(new ContactData().withFirstname("Ivan").withLastname("Ivanov").withAddress("144A Mira str., Apt. 1, Moscow 123456, Russia.").
+                    withMobilePhone("8 (999) 11-11-111").withtEmail("111@111.com").withGroup("test"));
         }
     }
 
     @Test
     public void testContactModification() {
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().list();
         int lastContactIndex = before.size() - 1;
-        ContactData contact = new ContactData("Ann", "Antonova",
-                "144A Mira str., Apt. 1, Moscow 123456, Russia.", "8 (999) 11-11-111",
-                "111@111.com", null);
-        app.getContactHelper().modifyContact(lastContactIndex, contact);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        ContactData contact = new ContactData().withFirstname("Ann").withLastname("Antonova");
+        app.contact().modify(lastContactIndex, contact);
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size());
 
         before.remove(lastContactIndex);

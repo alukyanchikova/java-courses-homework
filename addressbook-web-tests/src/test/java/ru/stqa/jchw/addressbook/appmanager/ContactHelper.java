@@ -66,21 +66,21 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void modifyContact(int lastContactIndex, ContactData contact) {
+    public void modify(int lastContactIndex, ContactData contact) {
         initContactModification(lastContactIndex);
         fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();
     }
 
-    public void deleteContact(int indexContactDeletion) {
+    public void delete(int indexContactDeletion) {
         selectContact(indexContactDeletion);
         clickOnDelete();
         acceptDeletion();
         returnToHomePage();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> rows = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
         for (WebElement row : rows) {
@@ -89,7 +89,7 @@ public class ContactHelper extends HelperBase {
             String firstName = firstNameColumn.getText();
             WebElement lastNameColumn = columns.get(1);
             String lastName = lastNameColumn.getText();
-            ContactData contact = new ContactData(firstName, lastName, null, null, null, null);
+            ContactData contact = new ContactData().withFirstname(firstName).withLastname(lastName);
             contacts.add(contact);
         }
         return contacts;

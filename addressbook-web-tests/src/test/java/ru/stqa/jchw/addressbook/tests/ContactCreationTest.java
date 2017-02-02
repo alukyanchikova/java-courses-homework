@@ -12,24 +12,24 @@ public class ContactCreationTest extends TestBase{
     @Test
     public void testContactCreation() {
         // given
-        app.getContactHelper().returnToHomePage();
-        List<ContactData> before = app.getContactHelper().getContactList();
-        ContactData contact = new ContactData("Ivan", "Ivanov", "144A Mira str., Apt. 1, Moscow 123456, " +
-                "Russia.", "8 (999) 11-11-111", "111@111.com", "test");
+        app.contact().returnToHomePage();
+        List<ContactData> before = app.contact().list();
+        ContactData contact = new ContactData().withFirstname("Ivan").withLastname("Ivanov").withAddress("144A Mira str., Apt. 1, Moscow 123456, Russia.").
+                withMobilePhone("8 (999) 11-11-111").withtEmail("111@111.com").withGroup("test");
 
         // when
-        app.getContactHelper().createContact(contact);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().createContact(contact);
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() + 1);
         before.add(contact);
 
         // then
         Comparator<ContactData> byLastAndFirstName = (o1, o2) -> {
-            int lestNameCompareResult = o1.getLastname().compareTo(o2.getLastname());
-            if (lestNameCompareResult == 0) {
+            int lastNameCompareResult = o1.getLastname().compareTo(o2.getLastname());
+            if (lastNameCompareResult == 0) {
                 return o1.getFirstname().compareTo(o2.getFirstname());
             }
-            return lestNameCompareResult;
+            return lastNameCompareResult;
         };
 
         before.sort(byLastAndFirstName);
