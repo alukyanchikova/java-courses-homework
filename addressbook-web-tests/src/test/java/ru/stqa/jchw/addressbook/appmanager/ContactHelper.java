@@ -6,8 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.jchw.addressbook.model.ContactData;
+import ru.stqa.jchw.addressbook.model.Contacts;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
@@ -38,8 +38,8 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.linkText("add new")).click();
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value ='" + id + "']")).click();
     }
 
     public void acceptDeletion() {
@@ -50,8 +50,18 @@ public class ContactHelper extends HelperBase {
         clickOnForm(By.xpath("//input[@value='Delete']"));
     }
 
-    public void initContactModification(int index) {
-        wd.findElements(By.xpath ("//img[@title='Edit'][1]")).get(index).click();
+    public void initContactModification(int id) {
+        List<WebElement> rows = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
+        for (WebElement row : rows) {
+            List<WebElement> columns = row.findElements(By.xpath(".//td"));
+            WebElement idColumn = columns.get(0);
+            int columnId = Integer.parseInt(idColumn.findElement(By.tagName("input")).getAttribute("value"));
+            if (columnId == id) {
+                WebElement editButton = columns.get(7);
+                editButton.click();
+                return;
+            }
+        }
     }
 
     public void submitContactModification() {
@@ -66,31 +76,33 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void modify(int lastContactIndex, ContactData contact) {
-        initContactModification(lastContactIndex);
+    public void modify(ContactData contact) {
+        selectContactById(contact.getId());
+        initContactModification(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();
     }
 
-    public void delete(int indexContactDeletion) {
-        selectContact(indexContactDeletion);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         clickOnDelete();
         acceptDeletion();
         returnToHomePage();
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<>();
+     public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> rows = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
         for (WebElement row : rows) {
-            List<WebElement> columns =row.findElements(By.xpath(".//td"));
+            List<WebElement> columns = row.findElements(By.xpath(".//td"));
+            WebElement idColumn = columns.get(0);
+            int id = Integer.parseInt(idColumn.findElement(By.tagName("input")).getAttribute("value"));
             WebElement firstNameColumn = columns.get(2);
             String firstName = firstNameColumn.getText();
             WebElement lastNameColumn = columns.get(1);
             String lastName = lastNameColumn.getText();
-            ContactData contact = new ContactData().withFirstname(firstName).withLastname(lastName);
-            contacts.add(contact);
+            contacts.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
         }
         return contacts;
     }
