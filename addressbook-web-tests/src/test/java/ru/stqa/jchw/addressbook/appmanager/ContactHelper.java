@@ -50,18 +50,26 @@ public class ContactHelper extends HelperBase {
         clickOnForm(By.xpath("//input[@value='Delete']"));
     }
 
+    public ContactData initFormEditForm(ContactData contact) {
+        initContactModification(contact.getId());
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstName).withLastname(lastName).withHomePhone(home)
+                .withMobilePhone(mobile).withWorkPhone(work);
+     }
+
     public void initContactModification(int id) {
-        List<WebElement> rows = wd.findElements(By.xpath(".//table[@id='maintable']/descendant::tr[@name='entry']"));
-        for (WebElement row : rows) {
-            List<WebElement> columns = row.findElements(By.xpath(".//td"));
-            WebElement idColumn = columns.get(0);
-            int columnId = Integer.parseInt(idColumn.findElement(By.tagName("input")).getAttribute("value"));
-            if (columnId == id) {
-                WebElement editButton = columns.get(7);
-                editButton.click();
-                return;
-            }
-        }
+        WebElement checkbox = wd.findElement(By.cssSelector(String.format("input[value='%s']", id)));
+        WebElement row = checkbox.findElement(By.xpath("./../.."));
+        List<WebElement> cells = row.findElements(By.tagName("td"));
+        cells.get(7).findElement(By.tagName("a")).click();
+
+        //wd.findElement(By.xpath(String.format("//input[@value='%s']/../../td[8]/a", id))).click();
+        //wd.findElement(By.xpath(String.format("//tr[.//input[@value='%s']]/td[8]/a", id))).click();
     }
 
     public void submitContactModification() {
@@ -106,11 +114,11 @@ public class ContactHelper extends HelperBase {
             List<WebElement> columns = row.findElements(By.xpath(".//td"));
             WebElement idColumn = columns.get(0);
             int id = Integer.parseInt(idColumn.findElement(By.tagName("input")).getAttribute("value"));
-            WebElement firstNameColumn = columns.get(2);
-            String firstName = firstNameColumn.getText();
-            WebElement lastNameColumn = columns.get(1);
-            String lastName = lastNameColumn.getText();
-            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName));
+            String lastName = columns.get(1).getText();
+            String firstName = columns.get(2).getText();
+            String[] phones = columns.get(5).getText().split("\n");
+            contactCache.add(new ContactData().withId(id).withFirstname(firstName).withLastname(lastName).withHomePhone(phones[0])
+                    .withMobilePhone(phones[1]).withWorkPhone(phones[2]));
         }
         return new Contacts(contactCache);
     }
