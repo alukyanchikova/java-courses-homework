@@ -23,10 +23,10 @@ public class ApplicationManager {
     }
 
     public void init() {
-        //System.setProperty("webdriver.gecko.driver", "C:\\Users\\Alexander_Lukyanchik\\www\\geckodriver.exe");
-        System.setProperty("webdriver.gecko.driver", "C:\\Users\\ALukyanchikova\\Desktop\\geckodriver.exe");
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ALukyanchikova\\Desktop\\chromedriver.exe");
-        System.setProperty("webdriver.ie.driver", "C:\\Users\\ALukyanchikova\\Desktop\\IEDriverServer.exe");
+//        Uncomment if running on Windows
+//        System.setProperty("webdriver.gecko.driver", "C:\\Users\\ALukyanchikova\\Desktop\\geckodriver.exe");
+//        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ALukyanchikova\\Desktop\\chromedriver.exe");
+//        System.setProperty("webdriver.ie.driver", "C:\\Users\\ALukyanchikova\\Desktop\\IEDriverServer.exe");
 
         if (browser.equals(FIREFOX)) {
             wd = new FirefoxDriver();
