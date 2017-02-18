@@ -1,9 +1,12 @@
 package ru.stqa.jchw.addressbook.model;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import java.io.File;
 
+@XStreamAlias("contacts")
 public class ContactData {
-    private int id;
+    private transient int id;
     private String firstname;
     private String lastname;
     private String address;
@@ -17,7 +20,6 @@ public class ContactData {
     private String group;
     private String allPhones;
     private File photo;
-
 
     public ContactData withId(int id) {
         this.id = id;
