@@ -85,13 +85,15 @@ public class ContactDataGenerator {
             ContactData contact = new ContactData()
                     .withFirstname(String.format("Firstname %s", i))
                     .withLastname(String.format("Lastname %s", i))
-                    .withAddress(String.format("address %s", i))
+                    .withAddress(String.format("Address %s", i))
                     .withHomePhone(String.format("HomePhone %s", i))
                     .withMobilePhone(String.format("MobilePhone %s", i))
                     .withWorkPhone(String.format("WorkPhone %s", i))
                     .withEmail(String.format("Email %s", i))
                     .withEmail2(String.format("Email2 %s", i))
-                    .withEmail3(String.format("Email3 %s", i));
+                    .withEmail3(String.format("Email3 %s", i))
+                    .withPhoto("src/test/resources/pic.jpeg")
+                    .withGroup("test");
 
             contacts.add(contact);
         }

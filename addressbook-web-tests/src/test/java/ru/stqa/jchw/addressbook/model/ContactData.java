@@ -2,8 +2,6 @@ package ru.stqa.jchw.addressbook.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-import java.io.File;
-
 @XStreamAlias("contacts")
 public class ContactData {
     private transient int id;
@@ -19,7 +17,7 @@ public class ContactData {
     private String allEmails;
     private String group;
     private String allPhones;
-    private File photo;
+    private String photo;
 
     public ContactData withId(int id) {
         this.id = id;
@@ -76,7 +74,6 @@ public class ContactData {
         return this;
     }
 
-
     public ContactData withGroup(String group) {
         this.group = group;
         return this;
@@ -87,7 +84,7 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withPhoto(File photo) {
+    public ContactData withPhoto(String photo) {
         this.photo = photo;
         return this;
     }
@@ -127,9 +124,11 @@ public class ContactData {
     public String getEmail2() {
         return email2;
     }
+
     public String getEmail3() {
         return email3;
     }
+
     public String getAllEmails() {
         return allEmails;
     }
@@ -142,7 +141,7 @@ public class ContactData {
         return allPhones;
     }
 
-    public File getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 

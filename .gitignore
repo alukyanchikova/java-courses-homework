@@ -12,3 +12,6 @@ build/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
+
+# Generated data
+generated-data/
