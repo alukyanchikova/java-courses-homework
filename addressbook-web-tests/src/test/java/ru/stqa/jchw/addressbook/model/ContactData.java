@@ -1,22 +1,76 @@
 package ru.stqa.jchw.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "addressbook")
 @XStreamAlias("contacts")
 public class ContactData {
-    private transient int id;
+
+    @Id
+    @Column(name = "id")
+    private int id;
+
+    @Expose
+    @Column(name = "firstname")
     private String firstname;
+
+    @Expose
+    @Column(name = "lastname")
     private String lastname;
+
+    @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
+
+    @Expose
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
+
+    @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone;
+
+    @Expose
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
+
+    @Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private String email;
+
+    @Expose
+    @Column(name = "email2")
+    @Type(type = "text")
     private String email2;
+
+    @Expose
+    @Column(name = "email3")
+    @Type(type = "text")
     private String email3;
+
+    @Transient
     private String allEmails;
+
+    @Expose
+    @Transient
     private String group;
+
+    @Transient
     private String allPhones;
+
+    @Expose
+    @Type(type = "text")
+    @Column(name = "photo")
     private String photo;
 
     public ContactData withId(int id) {
