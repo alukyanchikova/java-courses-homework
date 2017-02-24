@@ -161,5 +161,20 @@ public class ContactHelper extends HelperBase {
     public int count() {
         return wd.findElements(By.name("selected[]")).size();
     }
+
+    public void addContactToGroup(int contactId, int groupId) {
+        returnToHomePage();
+        selectContactById(contactId);
+        WebElement groupDropdownList = wd.findElement(By.name("to_group"));
+        new Select(groupDropdownList).selectByValue(String.valueOf(groupId));
+
+        wd.findElement(By.name("add")).click();
+        returnToHomePage();
+    }
+
+    public void chooseAllGroups() {
+        WebElement groupDropdownList = wd.findElement(By.name("group"));
+        new Select(groupDropdownList).selectByValue(String.valueOf(""));
+    }
 }
 
