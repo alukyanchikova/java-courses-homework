@@ -2,10 +2,13 @@ package ru.stqa.jchw.addressbook.tests;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.jchw.addressbook.model.ContactData;
 import ru.stqa.jchw.addressbook.model.Contacts;
+import ru.stqa.jchw.addressbook.model.GroupData;
+import ru.stqa.jchw.addressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -35,14 +38,25 @@ public class ContactCreationTest extends TestBase {
         }
     }
 
+    @BeforeMethod
+    public void ensurePreconditions() {
+        if (app.db().groups().size() == 0) {
+            app.goTo().groupPage();
+            app.group().create(new GroupData().withName("test"));
+        }
+    }
+
     @Test (dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact) {
         // given
+        Groups groups = app.db().groups();
         Contacts before = app.db().contacts();
         app.goTo().homePage();
 
         // when
-        app.contact().createContact(contact);
+        app.contact().createContact(contact.inGroup(groups.iterator().next()));
+
+        // then
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.db().contacts();
 

@@ -92,8 +92,7 @@ public class ContactDataGenerator {
                     .withEmail(String.format("Email %s", i))
                     .withEmail2(String.format("Email2 %s", i))
                     .withEmail3(String.format("Email3 %s", i))
-                    .withPhoto("src/test/resources/pic.jpeg")
-                    .withGroup("test");
+                    .withPhoto("src/test/resources/pic.jpeg");
 
             contacts.add(contact);
         }

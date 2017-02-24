@@ -5,6 +5,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -61,10 +63,6 @@ public class ContactData {
     @Transient
     private String allEmails;
 
-    @Expose
-    @Transient
-    private String group;
-
     @Transient
     private String allPhones;
 
@@ -73,6 +71,12 @@ public class ContactData {
     @Column(name = "photo")
     @Transient
     private String photo;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<>();
 
     /**
      * Copy constructor
@@ -90,7 +94,6 @@ public class ContactData {
         this.email2 = contactData.email2;
         this.email3 = contactData.email3;
         this.allEmails = contactData.allEmails;
-        this.group = contactData.group;
         this.allPhones = contactData.allPhones;
         this.photo = contactData.photo;
     }
@@ -153,11 +156,6 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     public ContactData withAllPhones(String allPhones) {
         this.allPhones = allPhones;
         return this;
@@ -212,16 +210,16 @@ public class ContactData {
         return allEmails;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
     public String getAllPhones() {
         return allPhones;
     }
 
     public String getPhoto() {
         return photo;
+    }
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     @Override
@@ -238,7 +236,6 @@ public class ContactData {
                 ", email2='" + email2 + '\'' +
                 ", email3='" + email3 + '\'' +
                 ", allEmails='" + allEmails + '\'' +
-                ", group='" + group + '\'' +
                 ", allPhones='" + allPhones + '\'' +
                 '}';
     }
@@ -275,5 +272,10 @@ public class ContactData {
         result = 31 * result + (email2 != null ? email2.hashCode() : 0);
         result = 31 * result + (email3 != null ? email3.hashCode() : 0);
         return result;
+    }
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
     }
 }
