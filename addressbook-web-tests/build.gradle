@@ -13,6 +13,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'mysql:mysql-connector-java:6.0.5'
     compile 'org.hibernate:hibernate-core:5.2.8.Final'
+    compile 'org.subethamail:subethasmtp:3.1.7'
 }
 
 task testGroups(type: Test) {
