@@ -19,9 +19,11 @@ public class ApplicationManager {
     private final Properties properties;
     private WebDriver wd;
     private RegistrationHelper registrationHelper;
+    private LoginHelper loginHelper;
     private FtpHelper ftp;
     private MailHelper mailHelper;
-
+    private ResetHelper resetHelper;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -34,6 +36,7 @@ public class ApplicationManager {
 //        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ALukyanchikova\\Desktop\\chromedriver.exe");
 //        System.setProperty("webdriver.ie.driver", "C:\\Users\\ALukyanchikova\\Desktop\\IEDriverServer.exe");
 
+        dbHelper = new DbHelper();
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
     }
@@ -52,11 +55,25 @@ public class ApplicationManager {
         return properties.getProperty(key);
     }
 
-    public RegistrationHelper registration() {
+    public RegistrationHelper getRegistrationHelper() {
         if (registrationHelper == null) {
             registrationHelper = new RegistrationHelper(this);
         }
         return registrationHelper;
+    }
+
+    public LoginHelper getLoginHelper() {
+        if (loginHelper == null) {
+            loginHelper = new LoginHelper(this);
+        }
+        return loginHelper;
+    }
+
+    public ResetHelper getResetHelper() {
+        if (resetHelper == null) {
+            resetHelper = new ResetHelper(this);
+        }
+        return resetHelper;
     }
 
     public FtpHelper ftp() {
@@ -86,5 +103,9 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public DbHelper db(){
+        return dbHelper;
     }
 }
