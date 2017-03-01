@@ -35,15 +35,16 @@ public class ApplicationManager {
 //        System.setProperty("webdriver.gecko.driver", "C:\\Users\\ALukyanchikova\\Desktop\\geckodriver.exe");
 //        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ALukyanchikova\\Desktop\\chromedriver.exe");
 //        System.setProperty("webdriver.ie.driver", "C:\\Users\\ALukyanchikova\\Desktop\\IEDriverServer.exe");
-
         dbHelper = new DbHelper();
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+        mail().start();
     }
 
     public void stop() {
         if (wd != null) {
             wd.quit();
+            mail().stop();
         }
     }
 
